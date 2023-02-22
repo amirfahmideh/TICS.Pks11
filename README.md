@@ -18,4 +18,50 @@ When you work with hardware token you can find private key as RSA KEY and sign d
 # سامانه مودیان
 از این کد در امضا درخواست ها برای سیستم ارایه شده توسط دارایی با عنوان سامانه مودیان استفاده شده است 
 
+# Install
 
+1. Add nuget packge 
+```
+dotnet add package TICS.Pks11
+```
+
+## Usage
+### Dependency Injection Configuration (optional)
+```
+services.AddSingleton(new TokenCertificateOptions { FactoryType = config.FactoryType, RootDirectory = rootDirectory, StoreTokenLabel = config.StoreTokenLabel, TokenLabel = config.TokenLabel, TokenPinCode = config.TokenPinCode, PrivateKey = config.PrivateKey });
+```
+
+### Get RSA Private Key to sign 
+```
+TICS.Pks11.Pks11 pks = new TICS.Pks11.Pks11(_options);
+var rsaPrivateKey = pks.GetPrivateKey();
+ ```
+ 
+### Sign sample (کلاس مورد نیاز برای سامانه مودیان)
+```
+public class CustomSign : ISignatory
+{
+    private TICS.Pks11.TokenCertificateOptions _options;
+    public CustomSign(TICS.Pks11.TokenCertificateOptions options)
+    {
+        _options = options;
+    }
+    public string GetKeyId()
+    {
+        return null;
+    }
+    public string Sign(string data)
+    {
+
+        TICS.Pks11.Pks11 pks = new TICS.Pks11.Pks11(_options);
+        var rsaPrivateKey = pks.GetPrivateKey();
+        if (rsaPrivateKey != null)
+        {
+            var dataBytes = Encoding.UTF8.GetBytes(data);
+            var signString = Convert.ToBase64String(rsaPrivateKey.SignData(dataBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1));
+            return signString;
+        }
+        else return string.Empty;
+    }
+}
+```
