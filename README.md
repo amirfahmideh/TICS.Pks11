@@ -21,24 +21,24 @@ When you work with hardware token you can find private key as RSA KEY and sign d
 # Install
 
 1. Add nuget packge 
-```
+```dotnet
 dotnet add package TICS.Pks11
 ```
 
 ## Usage
 ### Dependency Injection Configuration (optional)
-```
+```c#
 services.AddSingleton(new TokenCertificateOptions { FactoryType = config.FactoryType, RootDirectory = rootDirectory, StoreTokenLabel = config.StoreTokenLabel, TokenLabel = config.TokenLabel, TokenPinCode = config.TokenPinCode, PrivateKey = config.PrivateKey });
 ```
 
 ### Get RSA Private Key to sign 
-```
+```c#
 TICS.Pks11.Pks11 pks = new TICS.Pks11.Pks11(_options);
 var rsaPrivateKey = pks.GetPrivateKey();
  ```
  
 ### Sign sample (کلاس مورد نیاز برای سامانه مودیان)
-```
+```c#
 public class CustomSign : ISignatory
 {
     private TICS.Pks11.TokenCertificateOptions _options;
