@@ -108,7 +108,7 @@ public class TokenCertificateOptions
 1. PrivateKeyFile: Use this type when you have privateKey.pem next to your root direcotry
 2. EPass3003AutoX64: Use this type when you want to have sign with private key in x64 
 3. EPass3003AutoX86: Use this type when you want to have sign with private key in x86
-4. PrivateKeyString: Use this type when private key fild is not empty in your injected configurations setting 
+4. PrivateKeyString: Use this type when private key field is not empty in your injected configurations setting 
 
 ---
 
