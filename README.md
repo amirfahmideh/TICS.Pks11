@@ -76,6 +76,40 @@ public class CustomSign : ISignatory
 }
 ```
 
+### TokenCertificateOptions
+
+```c#
+public class TokenCertificateOptions
+{
+    public FactoryType FactoryType { get; set; }
+    public string RootDirectory { get; set; } = default!;
+    public string StoreTokenLabel { get; set; } = default!;
+    public string TokenLabel { get; set; } = default!;
+    public string TokenPinCode { get; set; } = default!;
+    public string PrivateKey { get; set; } = default!;
+}
+```
+1. RootDirectory: path to your dll file
+2. StoreTokenLabel: When factory type is 1 or 2 Name of token label (sample: ePass3003Auto), you can find this name on root of your hardware token
+3. TokenLabel: When factory type is 1 or 2 Name of token label (sample: ePass3003Auto), lable of token in Hardware token, each token can contains more than one token (sample: Amir Fahmideh [stamp])
+4. TokenLabel: When factory type is 1 or 2 pin code of token
+5. PrivateKey: only fill this property when use factory type 3
+
+### Factory Type
+```c#
+   public enum FactoryType
+    {
+        PrivateKeyFile = 0,
+        EPass3003AutoX64 = 1,
+        EPass3003AutoX86 = 2,
+        PrivateKeyString = 3
+    }
+```
+1. PrivateKeyFile: Use this type when you have privateKey.pem next to your root direcotry
+2. EPass3003AutoX64: Use this type when you want to have sign with private key in x64 
+3. EPass3003AutoX86: Use this type when you want to have sign with private key in x86
+4. PrivateKeyString: Use this type when private key fild is not empty in your injected configurations setting 
+
 ---
 
 می تونی برای اینکه تونستی راحت تر و سریع تر به نتیجه دلخواهت برسی من رو یک قهواه مهمون کنی
