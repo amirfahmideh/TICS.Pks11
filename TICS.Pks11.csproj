@@ -4,6 +4,12 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>TICS.Pks11</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>amirfahmideh</Authors>
+    <Company>www.whiz.ir</Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/amirfahmideh/TICS.Pks11</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
