@@ -112,6 +112,6 @@ public class TokenCertificateOptions
 
 ---
 
-می تونی برای اینکه تونستی راحت تر و سریع تر به نتیجه دلخواهت برسی من رو یک قهواه مهمون کنی
+می تونی برای اینکه تونستی راحت تر و سریع تر به نتیجه دلخواهت برسی من رو یک قهوه مهمون کنی
 
 <a href="https://www.coffeebede.com/amirfahmideh"><img class="img-fluid" src="https://coffeebede.ir/DashboardTemplateV2/app-assets/images/banner/default-yellow.svg" /></a>
