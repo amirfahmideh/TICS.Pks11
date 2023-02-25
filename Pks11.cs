@@ -10,7 +10,6 @@ using Net.Pkcs11Interop.X509Store;
 public class Pks11
 {
     private TokenCertificateOptions _options { get; set; }
-    private string _privateKey { get; set; }
     /// <summary>
     /// سازنده کلاس Pks برای احراز هویت 
     /// </summary>
