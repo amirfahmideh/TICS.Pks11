@@ -17,10 +17,51 @@ namespace TICS.Pks11.Implementions
 
         public TokenCertificateOptions Options { get; set; }
 
+        private void TokensInfo(Pkcs11X509Store store)
+        {
+            if (store == null || store.Slots.Count() <= 0)
+            {
+                Console.WriteLine($"Hardware token not detected on servers");
+                return;
+            }
+            foreach (var slot in store.Slots)
+            {
+                Console.WriteLine($"Number of certificate in slot: {slot.Token.Info}: {slot.Token.Certificates.Count()}");
+                foreach (var cer in slot.Token.Certificates)
+                {
+                    Console.WriteLine($"Certificate label: {cer.Info.Label}, Id: {cer.Info.Id}");
+                }
+            }
+        }
+
         private Pkcs11X509Certificate? GetCertificate(Pkcs11X509Store store, string tokenLabel, string certLabel)
         {
-            Pkcs11Token? token = store?.Slots.FirstOrDefault(p => p.Token.Info.Label == tokenLabel)?.Token;
-            return token?.Certificates.FirstOrDefault(p => p.Info.Label == certLabel);
+            TokensInfo(store);
+            try
+            {
+                if (store == null || store.Slots.Count() <= 0)
+                {
+                    Console.WriteLine($"Hardware token not detected on servers");
+                    return null;
+                }
+                Pkcs11Token? token = store?.Slots.FirstOrDefault(p => p.Token.Info.Label == tokenLabel)?.Token;
+                if (token == null)
+                {
+                    Console.WriteLine($"unable to find hardware token with `{tokenLabel}` label");
+                    return null;
+                }
+                var certificate = token?.Certificates.FirstOrDefault(p => p.Info.Label == certLabel || p.Info.Id == certLabel);
+                if (certificate == null)
+                {
+                    Console.Write($"unable to find certificate with `{certLabel}` label");
+                    return null;
+                }
+                return certificate;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"unable to find certificate in TokenLabel:`{tokenLabel}` slot, with `{certLabel}` certificate!", e);
+            }
         }
 
         public RSA? GetPrivateKey()
@@ -38,7 +79,7 @@ namespace TICS.Pks11.Implementions
             }
             catch (Exception e)
             {
-                throw new Exception("در پیدا کردن کلید خصوصی در توکن سخت افزاری خطایی رخداده است", e);
+                throw new Exception($"unable to find private key in hardware token. Options Values: Factory Type: {Options.FactoryType}, Store Token Lable: {Options.StoreTokenLabel}, Token Lable: {Options.TokenLabel}, Token Pin Code:{Options.TokenPinCode}", e);
             }
         }
     }
